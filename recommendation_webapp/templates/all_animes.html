@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="search_result_title-3">
+  <h2>{{ count }} Anime{{ count|pluralize }} found</h2><br>
+</div>
+
+<div class="row">
+{% for animes in anime %}
+<div class="card">
+  <img src="{{ animes.img_url }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="anime_poster" height="220px">
+  <div class="card-body">
+    <h6 class="card-title"><a href="{{ animes.link }}">{{ animes.title|truncatechars:30 }}</a></h6>
+    <p class="card-text">{{ animes.genre|truncatechars:15 }}</p>
+    {% if animes.score >= '7' %}
+    <div class="seven-span">
+      <p class="card-text rate_score"><strong>{{ animes.score }}</strong></p>
+    </div>
+    {% elif animes.score >= '4' and animes.score < '7' %}
+    <div class="four-span">
+      <p class="card-text rate_score">{{ animes.score }}</p>
+    </div>
+    {% else %}
+    <div class="lowest-span">
+      <p class="card-text rate_score">{{ animes.score }}</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endfor %}
+</div>
+{% endblock %}

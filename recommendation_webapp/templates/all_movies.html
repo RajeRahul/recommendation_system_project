@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="search_result_title-3">
+  <h2>{{ count }} Movie{{ count|pluralize }} found</h2><br>
+</div>
+
+<div class="row">
+
+
+  {% for movies in movie %}
+  <div class="card">
+    <img src="{{ movies.Poster }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="movie_poster">
+    <div class="card-body">
+      <h6 class="card-title"><a href="{{ movies.Imdb_Link }}">{{ movies.Title|truncatechars:30 }}</a></h6>
+      <p class="card-text">{{ movies.Genre|truncatechars:15 }}</p>
+      {% if movies.IMDB_Score >= '7' %}
+      <div class="seven-span">
+        <p class="card-text rate_score"><strong>{{ movies.IMDB_Score }}</strong></p>
+      </div>
+      {% elif movies.IMDB_Score >= '4' and movies.IMDB_Score < '7' %}
+      <div class="four-span">
+        <p class="card-text rate_score">{{ movies.IMDB_Score }}</p>
+      </div>
+      {% else %}
+      <div class="lowest-span">
+        <p class="card-text rate_score">{{ movies.IMDB_Score }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+{% endblock %}

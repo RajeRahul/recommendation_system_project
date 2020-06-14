@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Sriracha&display=swap" rel="stylesheet">
+<section class="rec_engine_top_section">
+
+<div class="container-2">
+  <img class = "carousel_img" src="{% static 'recommendation_webapp/books.jpg' %}" alt="book">
+  <div class="centered">
+    <h1 class="title_heading" style="font-family: 'Dancing Script', cursive;">Book Recommendations</h1>
+  </div>
+</div>
+
+</section>
+
+<div class="search_result_title">
+  <h1>Category based filtering</h1>
+
+  <h2>please select at least one category</h2><br>
+</div>
+
+<section class="genre_filtering">
+  <div class="genre_filter">
+
+    <form name="form">
+      <div class="row genre_check">
+        {% for i in list %}
+        <div class="custom-control form-control-lg custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="{{ i }}" id="{{ i }}">
+        <label class="custom-control-label" for="{{ i }}">{{ i }}</label>
+        </div>
+        {% endfor %}
+      </div>
+
+
+      <div class="custom-control form-control-lg custom-checkbox">
+      <input type="checkbox" class="custom-control-input" name="rating" id="rating">
+      <label class="custom-control-label" for="rating">rating greater than 4 (out of 5)</label>
+
+      </div>
+      Filter By author <input type="text" name="author"><br>
+      <button class="btn btn-primary btn-lg genre_search-btn genre_search_book" type="submit"onclick="javascript: form.action='/book_genre_filtering';">Recommend Books</button>
+    </form>
+
+  </div>
+
+</section>
+
+<div class="search_result_title-2">
+  <h1>Similarity Filtering</h1>
+
+  <h2>Enter 3 books you liked. Could be your top 3 or recently read</h2><br>
+</div>
+
+<section class="similarity_filtering">
+  <div class="similar_filter">
+  <form name="form">
+
+    <div class="input-group mb-3 col-lg-8">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-default"><strong>Book 1</strong></span>
+  </div>
+  <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="book1">
+</div>
+
+<div class="input-group mb-3 col-lg-8">
+<div class="input-group-prepend">
+<span class="input-group-text" id="inputGroup-sizing-default"><strong>Book 2</strong></span>
+</div>
+<input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="book2">
+</div>
+
+<div class="input-group mb-3 col-lg-8">
+<div class="input-group-prepend">
+<span class="input-group-text" id="inputGroup-sizing-default"><strong>Book 3</strong></span>
+</div>
+<input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="book3">
+</div>
+
+    <button class="btn btn-primary btn-lg" type="submit"onclick="javascript: form.action='/book_similar_filtering';">Recommend Books</button>
+  </form>
+  </div>
+</section>
+{% endblock %}

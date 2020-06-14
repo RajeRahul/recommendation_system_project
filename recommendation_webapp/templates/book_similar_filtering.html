@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="search_result_title-3">
+  <h2>Books similar to your input</h2><br>
+</div>
+<div class="similar_rating_div">
+  <h3 class="similar_rating_text" >books you like have an average rating of {{ avg }}</h3>
+</div>
+<div class="similarity_genre_div">
+  <h3>your books belong in the following categories:</h3>
+  {% for i in category_list_final %}
+  {% if forloop.counter <= 5 %}
+  <strong class="similarity_genre_text">{{ i }} ,</strong>
+  {% endif %}
+  {% endfor %}
+</div>
+<div class="similarity_genre_div">
+  <h3>you prefer the following authors:</h3>
+  {% for i in author_list_final %}
+  {% if forloop.counter <= 5 %}
+  <strong class="similarity_genre_text">{{ i }} ,</strong>
+  {% endif %}
+  {% endfor %}
+</div>
+
+<div class="row">
+{% for books in book %}
+{% if  books.rating  >=  score  %}
+<div class="card">
+  <img src="{{ books.image }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="book_cover" height="220px">
+  <div class="card-body">
+    <h6 class="card-title"><a href="{{ books.link }}">{{ books.name|truncatechars:30 }}</a></h6>
+    <p class="card-text">{{ books.category|truncatechars:15 }}</p>
+    <p class="card-text"><strong>{{ books.author|truncatechars:15 }}</strong></p>
+    {% if books.rating >= '4' %}
+    <div class="seven-span">
+      <p class="card-text rate_score"><strong>{{ books.rating }}</strong></p>
+    </div>
+    {% else %}
+    <div class="four-span">
+      <p class="card-text rate_score">{{ books.rating }}</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+{% endfor %}
+</div>
+{% endblock %}

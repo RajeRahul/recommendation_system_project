@@ -1,0 +1,247 @@
+body {
+  text-align: center;
+}
+a {
+  text-decoration:none;
+}
+
+/* Index.html */
+/* Top Section */
+
+.carousel_img {
+  height: 650px;
+  width:1500px;
+  opacity: 0.8;
+  z-index: -1;
+}
+.front_imgs {
+  background-color: black;
+  color: #ffffff;
+}
+.container-1 {
+  position: relative;
+}
+.centered {
+  background-color: #D4F760;
+  color: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding-bottom: 15px;
+}
+.title_heading {
+  font-family: 'Dancing Script', cursive;
+  font-size: 700%;
+}
+
+/* Middle Section*/
+
+.quick_recommends {
+  background-color: #F1D67C;
+  line-height: 1;
+}
+.search_div {
+  padding-top: 3%;
+  padding-bottom: 3%;
+}
+.span1 {
+  font-size: 100%;
+}
+.search_btn {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.index_search {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.search_bar {
+  width: 190%;
+  margin-left: 140%;
+  margin-top: 0;
+}
+.radio_text {
+  margin-right: 20px;
+}
+
+/* Bottom Section */
+.recommendation_engines {
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+.Sec-3-title {
+  font-family: 'Courgette', cursive;
+  padding-bottom: 30px;
+}
+.btn-huge{
+    padding-top:20px;
+    padding-bottom:20px;
+    font-size: 40px;
+}
+/* MOvie Recommendation Engine button */
+.btn-warning,
+.btn-warning:active,
+.btn-warning:visited,
+.btn-warning:focus {
+    background-color: #A94567;
+    border-color: #A94567;
+    color: white;
+}
+.btn-warning:hover {
+  background-color: #7E2C48;
+  border-color: #7E2C48;
+}
+
+/* Book Recommendation Engine button */
+
+.btn-info,
+.btn-info:active,
+.btn-info:visited,
+.btn-info:focus {
+    background-color: #F0595E;
+    border-color: #F0595E;
+    color: white;
+}
+.btn-info:hover {
+  background-color: #A81D21;
+  border-color: #A81D21;
+}
+
+/* Anime Recommendation Engine button */
+
+.btn-success,
+.btn-success:active,
+.btn-success:visited,
+.btn-success:focus {
+    background-color: #F07815;
+    border-color: #F07815;
+    color: white;
+}
+.btn-success:hover {
+  background-color: #B6460A;
+  border-color: #B6460A;
+}
+/* end index */
+
+
+
+.container-fluid {
+  background-color: #F1D67C;
+  padding-top:2%;
+  padding-bottom: 2%;
+}
+.footer_text {
+  margin-bottom: 0;
+}
+
+
+/* Search result page */
+
+.row {
+  margin-left: 90px;
+  margin-right: 20px;
+  line-height: 0.5;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+.card {
+  width:12rem;
+  margin-right: 10px;
+}
+.search_result_title {
+  font-family: 'MuseoModerno', cursive;
+  padding-top: 25px;
+  background-color: #B1EDDD;
+}
+.search_result_title-2 {
+  font-family: 'MuseoModerno', cursive;
+  padding-top: 25px;
+  background-color: #AEA7FA;
+}
+/* Genre based result title */
+.search_result_title-3 {
+  font-family: 'MuseoModerno', cursive;
+  padding-top: 25px;
+  background-color: #BAF768;
+}
+.seven-span {
+  background-color: #79d70f;
+  height: 20px;
+}
+.four-span {
+  background-color: #f4ea8e;
+  height: 20px;
+}
+.lowest-span {
+  background-color: #e5e5e5;
+  height: 20px;
+}
+.rate_score {
+  padding-top: 4px;
+}
+
+
+/* Similarity search page */
+
+.similar_rating_div {
+  background-color: #10471E;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.similar_rating_text {
+  color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 0;
+}
+.similarity_genre_div {
+  background-color: #EBD364;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.similarity_genre_text {
+  font-size: 150%;
+}
+
+/* Recommendation engine pages */
+.container-2 {
+  position: relative;
+  background-color: black;
+}
+
+.title_heading_1 {
+  font-size: 600%;
+}
+.genre_filtering {
+  background-color: #266D3A;
+  color: white;
+}
+.genre_filter {
+  line-height: 2;
+}
+.checkbox-lg {
+  padding-top: 13px;
+  padding-left: 6px;
+}
+.genre_check {
+  margin-top: 0;
+  padding-top: 30px;
+  margin-bottom: 20px;
+}
+.genre_search-btn {
+  margin-bottom: 20px;
+}
+.similarity_filtering {
+  background-color: #7B5CDD;
+}
+.similar_filter {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.input-group {
+  padding-left: 550px;
+}
+.genre_search_book {
+  margin-top: 30px;
+}
