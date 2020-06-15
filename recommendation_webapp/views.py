@@ -18,6 +18,9 @@ def all_movies(request):
     if category == 'genre':
         movie = Movie.objects.filter(Q(Genre__icontains=search_query))
 
+    if movie.count() == 0 :
+        return render(request,'error_page.html')
+
     context = {
         'movie' : movie,
         'count' : movie.count(),
@@ -39,6 +42,9 @@ def all_books(request):
     if category == 'isbn':
         book = Book.objects.filter(Q(isbn__icontains=search_query))
 
+    if book.count() == 0:
+        return render(request,'error_page.html')
+
     context = {
         'book' : book,
         'count' : book.count(),
@@ -56,6 +62,9 @@ def all_animes(request):
         anime = Anime2.objects.filter(Q(title__icontains=search_query))
     if category == 'genre':
         anime = Anime2.objects.filter(Q(genre__icontains=search_query))
+
+    if anime.count() == 0:
+        return render(request,'error_page.html')
 
     context = {
         'anime' : anime,
@@ -154,6 +163,14 @@ def movie_similar_filtering(request):
     movie2 = request.GET.get('movie2')
     movie3 = request.GET.get('movie3')
 
+    #Error page check
+    mov1 = Movie.objects.filter(Q(Title__icontains=movie1))
+    mov2 = Movie.objects.filter(Q(Title__icontains=movie2))
+    mov3 = Movie.objects.filter(Q(Title__icontains=movie3))
+
+    if mov1.count() == 0 or mov2.count() == 0 or mov3.count() == 0:
+        return render(request,'error_page.html')
+
     score1 = Movie.objects.filter(Q(Title__icontains=movie1)).values_list('IMDB_Score',flat=True)
     score2 = Movie.objects.filter(Q(Title__icontains=movie2)).values_list('IMDB_Score',flat=True)
     score3 = Movie.objects.filter(Q(Title__icontains=movie3)).values_list('IMDB_Score',flat=True)
@@ -215,6 +232,9 @@ def book_genre_filtering(request):
     else :
         book = Book.objects.filter(Q(category__in=category_list))
 
+    if book.count() == 0:
+        return render(request,'error_page.html')
+
     context = {
         'book' : book,
         'genre_list' : category_list
@@ -227,6 +247,14 @@ def book_similar_filtering(request):
     book1 = request.GET.get('book1')
     book2 = request.GET.get('book2')
     book3 = request.GET.get('book3')
+
+    #Error page check
+    b1 = Book.objects.filter(Q(name__icontains=book1))
+    b2 = Book.objects.filter(Q(name__icontains=book2))
+    b3 = Book.objects.filter(Q(name__icontains=book3))
+
+    if b1.count() == 0 or b2.count() == 0 or b3.count() == 0:
+        return render(request,'error_page.html')
 
     rating1 = Book.objects.filter(Q(name__icontains=book1)).values_list('rating',flat=True)
     rating2 = Book.objects.filter(Q(name__icontains=book2)).values_list('rating',flat=True)
@@ -301,6 +329,14 @@ def anime_similar_filtering(request):
     anime1 = request.GET.get('anime1')
     anime2 = request.GET.get('anime2')
     anime3 = request.GET.get('anime3')
+
+    #Error page check
+    a1 = Anime2.objects.filter(Q(title__icontains=anime1))
+    a2 = Anime2.objects.filter(Q(title__icontains=anime2))
+    a3 = Anime2.objects.filter(Q(title__icontains=anime3))
+
+    if a1.count() == 0 or a2.count() == 0 or a3.count() == 0:
+        return render(request,'error_page.html')
 
     score1 = Anime2.objects.filter(Q(title__icontains=anime1)).values_list('score',flat=True)
     score2 = Anime2.objects.filter(Q(title__icontains=anime2)).values_list('score',flat=True)

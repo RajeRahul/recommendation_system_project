@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="search_result_title-3">
+  <h2>Error Page</h2><br>
+</div>
+
+<div class="error_div">
+
+  <span style='font-size:100px;'>&#128528;</span>
+  <h2>The item or one of the items you searched for is not in our database right now.</h2>
+  <h3>Or maybe you just made spelling mistake :/ </h3>
+  <br>
+  <form name="form">
+  <button type="submit" class="btn btn-primary btn-lg notBooks" onclick="javascript: form.action='/recommendations_webapp_home';">Go Back to Home</button>
+  </form>
+
+</div>
+
+{% endblock %}
