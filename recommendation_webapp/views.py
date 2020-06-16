@@ -122,6 +122,42 @@ def Find_Average_Rating(rating1,rating2,rating3):
 
     return round(Average(lst),1)
 
+def movie_categories(genre1,genre2,genre3):
+    list = []
+    unique_list = []
+
+    for i in genre1:
+        list.append(i.split('|'))
+    for i in genre2:
+        list.append(i.split('|'))
+    for i in genre3:
+        list.append(i.split('|'))
+
+    for i in range(len(list)):
+        for j in list[i]:
+            if j not in unique_list:
+                unique_list.append(j)
+
+    return unique_list
+
+def anime_categories(genre1,genre2,genre3):
+    list = []
+    unique_list = []
+
+    for i in genre1:
+        list.append(i.split(', '))
+    for i in genre2:
+        list.append(i.split(', '))
+    for i in genre3:
+        list.append(i.split(', '))
+
+    for i in range(len(list)):
+        for j in list[i]:
+            if j not in unique_list:
+                unique_list.append(j)
+
+    return unique_list
+
 def movie_recommendations(request):
 
     list = ['Animation','Adventure','Drama','Music','Fantasy','Thriller','Comedy','Sci-Fi','Horror','Action','Romance',
@@ -196,7 +232,13 @@ def movie_similar_filtering(request):
 
     imdb_score = str(float(avg) - 1)
 
-    genre_list_final = CommonCategories(genre1, genre2, genre3)
+    genre_list_final = CommonCategories(genre1,genre2,genre3)
+    genre_list = movie_categories(genre1, genre2, genre3)
+
+    test_list = []
+
+    for i in range(len(genre_list)):
+        test_list.append(Movie.objects.filter(Q(Genre__startswith=genre_list[i])))
 
     movie = Movie.objects.filter(Q(Genre__in=genre_list_final))
 
@@ -204,7 +246,8 @@ def movie_similar_filtering(request):
         'imdb_score' : imdb_score,
         'avg' : avg,
         'movie' : movie,
-        'genre_list_final' : genre_list_final
+        'genre_list_final' : genre_list,
+        'test_list' : test_list
     }
 
     return render(request,'movie_similar_filtering.html',context)
@@ -226,15 +269,22 @@ def movie_pre_filter(request):
 
     imdb_score = str(float(avg) - 1)
 
-    genre_list_final = CommonCategories(genre1, genre2, genre3)
+    genre_list_final = CommonCategories(genre1,genre2,genre3)
+    genre_list = movie_categories(genre1, genre2, genre3)
+
+    test_list = []
+
+    for i in range(len(genre_list)):
+        test_list.append(Movie.objects.filter(Q(Genre__startswith=genre_list[i])))
 
     movie = Movie.objects.filter(Q(Genre__in=genre_list_final))
 
     context = {
-        'avg' : avg,
         'imdb_score' : imdb_score,
+        'avg' : avg,
         'movie' : movie,
-        'genre_list_final' : genre_list_final
+        'genre_list_final' : genre_list,
+        'test_list' : test_list
     }
 
     return render(request,'movie_similar_filtering.html',context)
@@ -439,8 +489,6 @@ def anime_similar_filtering(request):
         }
         return render(request,'anime_pre_filter.html',context)
 
-    title_list = [anime1,anime2,anime3]
-
     score1 = Anime2.objects.filter(Q(title__icontains=anime1)).values_list('score',flat=True)
     score2 = Anime2.objects.filter(Q(title__icontains=anime2)).values_list('score',flat=True)
     score3 = Anime2.objects.filter(Q(title__icontains=anime3)).values_list('score',flat=True)
@@ -453,15 +501,22 @@ def anime_similar_filtering(request):
 
     score = str(float(avg) - 1)
 
-    genre_list_final = CommonCategories(genre1, genre2, genre3)
+    genre_list_final = CommonCategories(genre1,genre2,genre3)
+    genre_list = anime_categories(genre1, genre2, genre3)
 
-    anime = Anime2.objects.filter(Q(genre__startswith=genre_list_final)|Q(title__icontains=title_list))
+    test_list = []
+
+    for i in range(len(genre_list)):
+        test_list.append(Anime2.objects.filter(Q(genre__startswith=genre_list[i])))
+
+    anime = Anime2.objects.filter(Q(genre__in=genre_list_final))
 
     context = {
         'score' : score,
         'avg' : avg,
         'anime' : anime,
-        'genre_list_final' : genre_list_final
+        'genre_list_final' : genre_list,
+        'test_list' : test_list
     }
 
     return render(request,'anime_similar_filtering.html',context)
@@ -484,36 +539,22 @@ def anime_pre_filter(request):
 
     score = str(float(avg) - 1)
 
-    def anime_categories(genre1,genre2,genre3):
-        list = []
-        unique_list = []
-
-        for i in genre1:
-            list.append(i.split(','))
-        for i in genre2:
-            list.append(i.split(','))
-        for i in genre3:
-            list.append(i.split(','))
-
-        for i in range(len(list)):
-            for j in list[i]:
-                if j not in unique_list:
-                    unique_list.append(j)
-
-        return unique_list
-
-    genre_list_final = anime_categories(genre1, genre2, genre3)
+    genre_list_final = CommonCategories(genre1,genre2,genre3)
+    genre_list = anime_categories(genre1, genre2, genre3)
 
     test_list = []
 
-    for i in range(len(genre_list_final)):
-        test_list.append(Anime2.objects.filter(Q(genre__startswith=genre_list_final[i])))
+    for i in range(len(genre_list)):
+        test_list.append(Anime2.objects.filter(Q(genre__startswith=genre_list[i])))
+
+    anime = Anime2.objects.filter(Q(genre__in=genre_list_final))
 
     context = {
         'score' : score,
         'avg' : avg,
-        'genre_list_final' : genre_list_final,
+        'anime' : anime,
+        'genre_list_final' : genre_list,
         'test_list' : test_list
     }
 
-    return render(request,'test.html',context)
+    return render(request,'anime_similar_filtering.html',context)
