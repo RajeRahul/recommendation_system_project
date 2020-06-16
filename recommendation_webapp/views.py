@@ -14,7 +14,7 @@ def all_movies(request):
     category = request.GET.get('category')
 
     if category == 'title':
-        movie = Movie.objects.filter(Q(Title__icontains=search_query) ,Q(Title__icontains=number_list))
+        movie = Movie.objects.filter(Q(Title__icontains=search_query))
     if category == 'genre':
         movie = Movie.objects.filter(Q(Genre__icontains=search_query))
 
@@ -171,6 +171,19 @@ def movie_similar_filtering(request):
     if mov1.count() == 0 or mov2.count() == 0 or mov3.count() == 0:
         return render(request,'error_page.html')
 
+    if mov1.count() > 1 or mov2.count() > 1 or mov3.count() > 1:
+        context = {
+            'movie1' : movie1,
+            'movie2' : movie2,
+            'movie3' : movie3,
+            'mov1' : mov1,
+            'mov2' : mov2,
+            'mov3' : mov3
+        }
+        return render(request,'movie_pre_filter.html',context)
+
+    title_list = [movie1,movie2,movie3]
+
     score1 = Movie.objects.filter(Q(Title__icontains=movie1)).values_list('IMDB_Score',flat=True)
     score2 = Movie.objects.filter(Q(Title__icontains=movie2)).values_list('IMDB_Score',flat=True)
     score3 = Movie.objects.filter(Q(Title__icontains=movie3)).values_list('IMDB_Score',flat=True)
@@ -196,8 +209,38 @@ def movie_similar_filtering(request):
 
     return render(request,'movie_similar_filtering.html',context)
 
+def movie_pre_filter(request):
+    mov1 = request.GET.getlist('movie1')[0]
+    mov2 = request.GET.getlist('movie2')[0]
+    mov3 = request.GET.getlist('movie3')[0]
+
+    score1 = Movie.objects.filter(Q(imdbId__exact=mov1)).values_list('IMDB_Score',flat=True)
+    score2 = Movie.objects.filter(Q(imdbId__exact=mov2)).values_list('IMDB_Score',flat=True)
+    score3 = Movie.objects.filter(Q(imdbId__exact=mov3)).values_list('IMDB_Score',flat=True)
+
+    genre1 = Movie.objects.filter(Q(imdbId__exact=mov1)).values_list('Genre',flat=True)
+    genre2 = Movie.objects.filter(Q(imdbId__exact=mov2)).values_list('Genre',flat=True)
+    genre3 = Movie.objects.filter(Q(imdbId__exact=mov3)).values_list('Genre',flat=True)
+
+    avg = Find_Average_Rating(score1,score2,score3)
+
+    imdb_score = str(float(avg) - 1)
+
+    genre_list_final = CommonCategories(genre1, genre2, genre3)
+
+    movie = Movie.objects.filter(Q(Genre__in=genre_list_final))
+
+    context = {
+        'avg' : avg,
+        'imdb_score' : imdb_score,
+        'movie' : movie,
+        'genre_list_final' : genre_list_final
+    }
+
+    return render(request,'movie_similar_filtering.html',context)
+
 def book_recommendations(request):
-    list = ['Medical','Science-Geography','Health','History-Archeology','Art-Photography','Garden','Biography','Humour',
+    list = ['Medical','Science-Geography','Health','History-Archaeology','Art-Photography','Garden','Biography','Humour',
             'Business-Finance-Law','Mind-Body-Spirit','Childrens-Books','Personal-Development','Computing','Poetry-Drama','Crafts-Hobbies',
             'Religion','Crime-Thriller','Romance','Entertainment','Science-Fiction-Fantasy-Horror','Food-Drink','Graphic-Novels-Anime-Manga',
             'Society-Social-Sciences','Sport','Technology-Engineering','Teen-Young-Adult','Travel-Holiday-Guides']
@@ -210,7 +253,7 @@ def book_recommendations(request):
 
 def book_genre_filtering(request):
 
-    list = ['Medical','Science-Geography','Health','History-Archeology','Art-Photography','Garden','Biography','Humour',
+    list = ['Medical','Science-Geography','Health','History-Archaeology','Art-Photography','Garden','Biography','Humour',
             'Business-Finance-Law','Mind-Body-Spirit','Childrens-Books','Personal-Development','Computing','Poetry-Drama','Crafts-Hobbies',
             'Religion','Crime-Thriller','Romance','Entertainment','Science-Fiction-Fantasy-Horror','Food-Drink','Graphic-Novels-Anime-Manga',
             'Society-Social-Sciences','Sport','Technology-Engineering','Teen-Young-Adult','Travel-Holiday-Guides']
@@ -256,6 +299,17 @@ def book_similar_filtering(request):
     if b1.count() == 0 or b2.count() == 0 or b3.count() == 0:
         return render(request,'error_page.html')
 
+    if b1.count() > 1 or b2.count() > 1 or b3.count() > 1:
+        context = {
+            'book1' : book1,
+            'book2' : book2,
+            'book3' : book3,
+            'b1' : b1,
+            'b2' : b2,
+            'b3' : b3
+        }
+        return render(request,'book_pre_filter.html',context)
+
     rating1 = Book.objects.filter(Q(name__icontains=book1)).values_list('rating',flat=True)
     rating2 = Book.objects.filter(Q(name__icontains=book2)).values_list('rating',flat=True)
     rating3 = Book.objects.filter(Q(name__icontains=book3)).values_list('rating',flat=True)
@@ -267,6 +321,42 @@ def book_similar_filtering(request):
     author1 = Book.objects.filter(Q(name__icontains=book1)).values_list('author',flat=True)
     author2 = Book.objects.filter(Q(name__icontains=book2)).values_list('author',flat=True)
     author3 = Book.objects.filter(Q(name__icontains=book3)).values_list('author',flat=True)
+
+    avg = Find_Average_Rating(rating1,rating2,rating3)
+
+    score = str(float(avg) - 0.5)
+
+    category_list_final = CommonCategories(category1, category2, category3)
+    author_list_final = CommonCategories(author1,author2,author3)
+
+    book = Book.objects.filter(Q(category__in=category_list_final)|Q(author__in=author_list_final))
+
+    context = {
+        'category_list_final' : category_list_final,
+        'author_list_final' : author_list_final,
+        'book' : book,
+        'avg' : avg,
+        'score' : score,
+    }
+
+    return render(request,'book_similar_filtering.html',context)
+
+def book_pre_filter(request):
+    b1 = request.GET.getlist('book1')[0]
+    b2 = request.GET.getlist('book2')[0]
+    b3 = request.GET.getlist('book3')[0]
+
+    rating1 = Book.objects.filter(Q(isbn__exact=b1)).values_list('rating',flat=True)
+    rating2 = Book.objects.filter(Q(isbn__exact=b2)).values_list('rating',flat=True)
+    rating3 = Book.objects.filter(Q(isbn__exact=b3)).values_list('rating',flat=True)
+
+    category1 = Book.objects.filter(Q(isbn__exact=b1)).values_list('category',flat=True)
+    category2 = Book.objects.filter(Q(isbn__exact=b2)).values_list('category',flat=True)
+    category3 = Book.objects.filter(Q(isbn__exact=b3)).values_list('category',flat=True)
+
+    author1 = Book.objects.filter(Q(isbn__exact=b1)).values_list('author',flat=True)
+    author2 = Book.objects.filter(Q(isbn__exact=b2)).values_list('author',flat=True)
+    author3 = Book.objects.filter(Q(isbn__exact=b3)).values_list('author',flat=True)
 
     avg = Find_Average_Rating(rating1,rating2,rating3)
 
@@ -338,6 +428,19 @@ def anime_similar_filtering(request):
     if a1.count() == 0 or a2.count() == 0 or a3.count() == 0:
         return render(request,'error_page.html')
 
+    if a1.count() > 1 or a2.count() > 1 or a3.count() > 1:
+        context = {
+            'anime1' : anime1,
+            'anime2' : anime2,
+            'anime3' : anime3,
+            'a1' : a1,
+            'a2' : a2,
+            'a3' : a3
+        }
+        return render(request,'anime_pre_filter.html',context)
+
+    title_list = [anime1,anime2,anime3]
+
     score1 = Anime2.objects.filter(Q(title__icontains=anime1)).values_list('score',flat=True)
     score2 = Anime2.objects.filter(Q(title__icontains=anime2)).values_list('score',flat=True)
     score3 = Anime2.objects.filter(Q(title__icontains=anime3)).values_list('score',flat=True)
@@ -352,7 +455,7 @@ def anime_similar_filtering(request):
 
     genre_list_final = CommonCategories(genre1, genre2, genre3)
 
-    anime = Anime2.objects.filter(Q(genre__in=genre_list_final))
+    anime = Anime2.objects.filter(Q(genre__startswith=genre_list_final)|Q(title__icontains=title_list))
 
     context = {
         'score' : score,
@@ -362,3 +465,55 @@ def anime_similar_filtering(request):
     }
 
     return render(request,'anime_similar_filtering.html',context)
+
+def anime_pre_filter(request):
+
+    a1 = request.GET.getlist('anime1')[0]
+    a2 = request.GET.getlist('anime2')[0]
+    a3 = request.GET.getlist('anime3')[0]
+
+    score1 = Anime2.objects.filter(Q(uid__exact=a1)).values_list('score',flat=True)
+    score2 = Anime2.objects.filter(Q(uid__exact=a2)).values_list('score',flat=True)
+    score3 = Anime2.objects.filter(Q(uid__exact=a3)).values_list('score',flat=True)
+
+    genre1 = Anime2.objects.filter(Q(uid__exact=a1)).values_list('genre',flat=True)
+    genre2 = Anime2.objects.filter(Q(uid__exact=a2)).values_list('genre',flat=True)
+    genre3 = Anime2.objects.filter(Q(uid__exact=a3)).values_list('genre',flat=True)
+
+    avg = Find_Average_Rating(score1,score2,score3)
+
+    score = str(float(avg) - 1)
+
+    def anime_categories(genre1,genre2,genre3):
+        list = []
+        unique_list = []
+
+        for i in genre1:
+            list.append(i.split(','))
+        for i in genre2:
+            list.append(i.split(','))
+        for i in genre3:
+            list.append(i.split(','))
+
+        for i in range(len(list)):
+            for j in list[i]:
+                if j not in unique_list:
+                    unique_list.append(j)
+
+        return unique_list
+
+    genre_list_final = anime_categories(genre1, genre2, genre3)
+
+    test_list = []
+
+    for i in range(len(genre_list_final)):
+        test_list.append(Anime2.objects.filter(Q(genre__startswith=genre_list_final[i])))
+
+    context = {
+        'score' : score,
+        'avg' : avg,
+        'genre_list_final' : genre_list_final,
+        'test_list' : test_list
+    }
+
+    return render(request,'test.html',context)

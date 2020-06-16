@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="search_result_title-3">
+  <h2>Help us improve your filtering</h2><br>
+</div>
+<div class="similar_rating_div">
+  <h3 class="similar_rating_text" >choose the exact book you want</h3>
+</div>
+
+<form name="form">
+
+  <div class="similar_rating_div-1">
+    <h3 class="similar_rating_text-1" >Book : {{ book1 }}</h3>
+  </div>
+
+  <div class="row">
+  {% for books in b1 %}
+  <input type="radio" name="book1" value="{{ books.isbn }}" required>
+  <div class="card">
+    <img src="{{ books.image }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="book_cover" height="220px">
+    <div class="card-body">
+      <h6 class="card-title"><a href="{{ books.link }}">{{ books.name|truncatechars:30 }}</a></h6>
+      <p class="card-text">{{ books.category|truncatechars:15 }}</p>
+      <p class="card-text"><strong>{{ books.author|truncatechars:15 }}</strong></p>
+      {% if books.rating >= '4' %}
+      <div class="seven-span">
+        <p class="card-text rate_score"><strong>{{ books.rating }}</strong></p>
+      </div>
+      {% else %}
+      <div class="four-span">
+        <p class="card-text rate_score">{{ books.rating }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% endfor %}
+  </div>
+
+  <div class="similar_rating_div-1">
+    <h3 class="similar_rating_text-1" >Book : {{ book2 }}</h3>
+  </div>
+
+  <div class="row">
+  {% for books in b2 %}
+  <input type="radio" name="book2" value="{{ books.isbn }}" required>
+  <div class="card">
+    <img src="{{ books.image }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="book_cover" height="220px">
+    <div class="card-body">
+      <h6 class="card-title"><a href="{{ books.link }}">{{ books.name|truncatechars:30 }}</a></h6>
+      <p class="card-text">{{ books.category|truncatechars:15 }}</p>
+      <p class="card-text"><strong>{{ books.author|truncatechars:15 }}</strong></p>
+      {% if books.rating >= '4' %}
+      <div class="seven-span">
+        <p class="card-text rate_score"><strong>{{ books.rating }}</strong></p>
+      </div>
+      {% else %}
+      <div class="four-span">
+        <p class="card-text rate_score">{{ books.rating }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% endfor %}
+  </div>
+
+  <div class="similar_rating_div-1">
+    <h3 class="similar_rating_text-1" >Book : {{ book3 }}</h3>
+  </div>
+
+  <div class="row">
+  {% for books in b3 %}
+  <input type="radio" name="book3" value="{{ books.isbn }}" required>
+  <div class="card">
+    <img src="{{ books.image }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="book_cover" height="220px">
+    <div class="card-body">
+      <h6 class="card-title"><a href="{{ books.link }}">{{ books.name|truncatechars:30 }}</a></h6>
+      <p class="card-text">{{ books.category|truncatechars:15 }}</p>
+      <p class="card-text"><strong>{{ books.author|truncatechars:15 }}</strong></p>
+      {% if books.rating >= '4' %}
+      <div class="seven-span">
+        <p class="card-text rate_score"><strong>{{ books.rating }}</strong></p>
+      </div>
+      {% else %}
+      <div class="four-span">
+        <p class="card-text rate_score">{{ books.rating }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% endfor %}
+  </div>
+
+  <div class="similar_rating_div-1">
+    <button class="btn btn-primary btn-lg genre_search-btn" type="submit"onclick="javascript: form.action='/book_pre_filter';">Recommend Books</button>
+  </div>
+
+</form>
+{% endblock %}

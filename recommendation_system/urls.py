@@ -32,4 +32,7 @@ urlpatterns = [
     path('anime_recommendations/',views.anime_recommendations,name='anime_recommendations'),
     path('anime_genre_filtering',views.anime_genre_filtering,name='anime_genre_filtering'),
     path('anime_similar_filtering/',views.anime_similar_filtering,name='anime_similar_filtering'),
+    path('movie_pre_filter/',views.movie_pre_filter,name='movie_pre_filter'),
+    path('book_pre_filter/',views.book_pre_filter,name='book_pre_filter'),
+    path('anime_pre_filter/',views.anime_pre_filter,name='anime_pre_filter'),
 ]

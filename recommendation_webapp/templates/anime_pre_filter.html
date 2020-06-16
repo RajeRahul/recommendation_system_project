@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="search_result_title-3">
+  <h2>Help us improve your filtering</h2><br>
+</div>
+<div class="similar_rating_div">
+  <h3 class="similar_rating_text" >choose the exact anime you want</h3>
+</div>
+
+<form name="form">
+
+  <div class="similar_rating_div-1">
+    <h3 class="similar_rating_text-1" >Anime 1 : {{ anime1 }}</h3>
+  </div>
+
+  <div class="row">
+  {% for animes in a1 %}
+  <input type="radio" name="anime1" value="{{ animes.uid }}" required>
+  <div class="card">
+    <img src="{{ animes.img_url }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="anime_poster" height="220px">
+    <div class="card-body">
+      <h6 class="card-title"><a href="{{ animes.link }}">{{ animes.title|truncatechars:30 }}</a></h6>
+      <p class="card-text">{{ animes.genre|truncatechars:15 }}</p>
+      {% if animes.score >= '7' %}
+      <div class="seven-span">
+        <p class="card-text rate_score"><strong>{{ animes.score }}</strong></p>
+      </div>
+      {% elif animes.score >= '4' and animes.score < '7' %}
+      <div class="four-span">
+        <p class="card-text rate_score">{{ animes.score }}</p>
+      </div>
+      {% else %}
+      <div class="lowest-span">
+        <p class="card-text rate_score">{{ animes.score }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% endfor %}
+  </div>
+
+  <div class="similar_rating_div-1">
+    <h3 class="similar_rating_text-1" >Anime 2 : {{ anime2 }}</h3>
+  </div>
+
+  <div class="row">
+  {% for animes in a2 %}
+  <input type="radio" name="anime2" value="{{ animes.uid }}" required>
+  <div class="card">
+    <img src="{{ animes.img_url }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="anime_poster" height="220px">
+    <div class="card-body">
+      <h6 class="card-title"><a href="{{ animes.link }}">{{ animes.title|truncatechars:30 }}</a></h6>
+      <p class="card-text">{{ animes.genre|truncatechars:15 }}</p>
+      {% if animes.score >= '7' %}
+      <div class="seven-span">
+        <p class="card-text rate_score"><strong>{{ animes.score }}</strong></p>
+      </div>
+      {% elif animes.score >= '4' and animes.score < '7' %}
+      <div class="four-span">
+        <p class="card-text rate_score">{{ animes.score }}</p>
+      </div>
+      {% else %}
+      <div class="lowest-span">
+        <p class="card-text rate_score">{{ animes.score }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% endfor %}
+  </div>
+
+  <div class="similar_rating_div-1">
+    <h3 class="similar_rating_text-1" >Anime 3 : {{ anime3 }}</h3>
+  </div>
+
+  <div class="row">
+  {% for animes in a3 %}
+  <input type="radio" name="anime3" value="{{ animes.uid }}" required>
+  <div class="card">
+    <img src="{{ animes.img_url }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="anime_poster" height="220px">
+    <div class="card-body">
+      <h6 class="card-title"><a href="{{ animes.link }}">{{ animes.title|truncatechars:30 }}</a></h6>
+      <p class="card-text">{{ animes.genre|truncatechars:15 }}</p>
+      {% if animes.score >= '7' %}
+      <div class="seven-span">
+        <p class="card-text rate_score"><strong>{{ animes.score }}</strong></p>
+      </div>
+      {% elif animes.score >= '4' and animes.score < '7' %}
+      <div class="four-span">
+        <p class="card-text rate_score">{{ animes.score }}</p>
+      </div>
+      {% else %}
+      <div class="lowest-span">
+        <p class="card-text rate_score">{{ animes.score }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% endfor %}
+  </div>
+
+  <div class="similar_rating_div-1">
+    <button class="btn btn-primary btn-lg genre_search-btn" type="submit"onclick="javascript: form.action='/anime_pre_filter';">Recommend Animes</button>
+  </div>
+
+
+</form>
+{% endblock %}

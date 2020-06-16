@@ -166,16 +166,16 @@ a {
   padding-top: 25px;
   background-color: #BAF768;
 }
-.seven-span {
-  background-color: #79d70f;
-  height: 20px;
-}
 .four-span {
   background-color: #f4ea8e;
   height: 20px;
 }
 .lowest-span {
   background-color: #e5e5e5;
+  height: 20px;
+}
+.seven-span {
+  background-color: #7CCDEB;
   height: 20px;
 }
 .rate_score {
@@ -190,8 +190,18 @@ a {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+.similar_rating_div-1 {
+  background-color: #F0B95A;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 .similar_rating_text {
   color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 0;
+}
+.similar_rating_text-1 {
+  color: black;
   font-family: 'Orbitron', sans-serif;
   margin-bottom: 0;
 }
