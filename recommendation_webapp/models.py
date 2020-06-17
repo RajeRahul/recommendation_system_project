@@ -1,4 +1,4 @@
-from djongo import models
+from djongo import models #used djongo to connect to Mongodb
 
 class Movie(models.Model):
     imdbId = models.CharField(max_length = 10, null=True)

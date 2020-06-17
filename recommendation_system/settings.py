@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'recommendation_webapp',
+    'recommendation_webapp', # adding the application in the INSTALLED_APPS
 ]
 
 MIDDLEWARE = [
@@ -74,6 +74,7 @@ WSGI_APPLICATION = 'recommendation_system.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+#Using Djongo to connect Django and Mongodb
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -118,4 +119,5 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+#adding additional folder name to the static  url
 STATIC_URL = '/static/recommendation_webapp/'

@@ -1,14 +1,19 @@
+#Django imports for rendering html pages
 from django.shortcuts import render, redirect
+
+#importing necessary models from database
 from .models import Movie, Book, Anime2
+
+#importing Q from django to make conditional queries
 from django.db.models import Q
 
+#Home page render method
 def home(request):
     if request.method == 'GET':
         return render(request,'index.html')
 
+#quick recommendation search : Find Movies
 def all_movies(request):
-    number_list = ['1','2','3','4','5','6','7','8','9','0']
-
     search_query = request.GET.get('search_query')
 
     category = request.GET.get('category')
@@ -18,16 +23,17 @@ def all_movies(request):
     if category == 'genre':
         movie = Movie.objects.filter(Q(Genre__icontains=search_query))
 
+    #Error page check
     if movie.count() == 0 :
         return render(request,'error_page.html')
 
     context = {
         'movie' : movie,
-        'count' : movie.count(),
-        'string' : " Objects Found",
+        'count' : movie.count()
     }
     return render(request,'all_movies.html',context)
 
+#quick recommendation search : Find Books
 def all_books(request):
     search_query = request.GET.get('search_query')
 
@@ -42,17 +48,18 @@ def all_books(request):
     if category == 'isbn':
         book = Book.objects.filter(Q(isbn__icontains=search_query))
 
+    #Error page check
     if book.count() == 0:
         return render(request,'error_page.html')
 
     context = {
         'book' : book,
         'count' : book.count(),
-        'string' : " Objects Found",
     }
 
     return render(request,'all_books.html',context)
 
+#quick recommendation search : Find Animes
 def all_animes(request):
     search_query = request.GET.get('search_query')
 
@@ -63,33 +70,26 @@ def all_animes(request):
     if category == 'genre':
         anime = Anime2.objects.filter(Q(genre__icontains=search_query))
 
+    #Error page check
     if anime.count() == 0:
         return render(request,'error_page.html')
 
     context = {
         'anime' : anime,
         'count' : anime.count(),
-        'string' : " Objects Found"
     }
 
     return render(request,'all_animes.html',context)
 
+#Some common methods defined that can be directly accessed in the main filtering methods
+#---------------------------------------------------------------------------------------
+
 def Average(lst):
     return sum(lst) / len(lst)
 
-def CommonCategories(category1, category2, category3):
+def CommonCategories(category_list1, category_list2, category_list3):
 
-    category_list1 = []
-    category_list2 = []
-    category_list3 = []
     unique_categories = []
-
-    for i in category1:
-        category_list1.append(i)
-    for i in category2:
-        category_list1.append(i)
-    for i in category3:
-        category_list1.append(i)
 
     for i in category_list1:
         if i not in unique_categories:
@@ -158,6 +158,9 @@ def anime_categories(genre1,genre2,genre3):
 
     return unique_list
 
+#---------------------------------------------------------------------------------------
+
+#Movie recommendation engine rendering method
 def movie_recommendations(request):
 
     list = ['Animation','Adventure','Drama','Music','Fantasy','Thriller','Comedy','Sci-Fi','Horror','Action','Romance',
@@ -165,6 +168,7 @@ def movie_recommendations(request):
 
     return render(request,'movie_recommendations.html',{'list':list})
 
+#Movie Genre based recommendations
 def movie_genre_filtering(request):
 
     list = ['Animation','Adventure','Drama','Music','Fantasy','Thriller','Comedy','Sci-Fi','Horror','Action','Romance',
@@ -185,6 +189,10 @@ def movie_genre_filtering(request):
         for i in range(len(genre_list)):
             test_list.append(Movie.objects.filter(Q(Genre__startswith=genre_list[i])))
 
+    #Error page check
+    if not test_list:
+        return render(request,'error_page.html')
+
     context = {
         'test_list' : test_list,
         'genre_list' : genre_list
@@ -192,7 +200,7 @@ def movie_genre_filtering(request):
 
     return render(request,'movie_genre_filtering.html',context)
 
-
+#Movie similarity filtering method 1
 def movie_similar_filtering(request):
 
     movie1 = request.GET.get('movie1')
@@ -217,8 +225,6 @@ def movie_similar_filtering(request):
             'mov3' : mov3
         }
         return render(request,'movie_pre_filter.html',context)
-
-    title_list = [movie1,movie2,movie3]
 
     score1 = Movie.objects.filter(Q(Title__icontains=movie1)).values_list('IMDB_Score',flat=True)
     score2 = Movie.objects.filter(Q(Title__icontains=movie2)).values_list('IMDB_Score',flat=True)
@@ -252,6 +258,7 @@ def movie_similar_filtering(request):
 
     return render(request,'movie_similar_filtering.html',context)
 
+#Movie similarity filtering method 2
 def movie_pre_filter(request):
     mov1 = request.GET.getlist('movie1')[0]
     mov2 = request.GET.getlist('movie2')[0]
@@ -289,6 +296,7 @@ def movie_pre_filter(request):
 
     return render(request,'movie_similar_filtering.html',context)
 
+#Book recommendation engine rendering method
 def book_recommendations(request):
     list = ['Medical','Science-Geography','Health','History-Archaeology','Art-Photography','Garden','Biography','Humour',
             'Business-Finance-Law','Mind-Body-Spirit','Childrens-Books','Personal-Development','Computing','Poetry-Drama','Crafts-Hobbies',
@@ -301,6 +309,7 @@ def book_recommendations(request):
 
     return render(request,'book_recommendations.html',context)
 
+#Book genre based recommendations
 def book_genre_filtering(request):
 
     list = ['Medical','Science-Geography','Health','History-Archaeology','Art-Photography','Garden','Biography','Humour',
@@ -325,6 +334,7 @@ def book_genre_filtering(request):
     else :
         book = Book.objects.filter(Q(category__in=category_list))
 
+    #Error page check
     if book.count() == 0:
         return render(request,'error_page.html')
 
@@ -335,6 +345,7 @@ def book_genre_filtering(request):
 
     return render(request,'book_genre_filtering.html',context)
 
+#book similarity filtering method 1
 def book_similar_filtering(request):
 
     book1 = request.GET.get('book1')
@@ -391,6 +402,7 @@ def book_similar_filtering(request):
 
     return render(request,'book_similar_filtering.html',context)
 
+#book similarity filtering method 2
 def book_pre_filter(request):
     b1 = request.GET.getlist('book1')[0]
     b2 = request.GET.getlist('book2')[0]
@@ -427,6 +439,7 @@ def book_pre_filter(request):
 
     return render(request,'book_similar_filtering.html',context)
 
+#Anime recommendation engine rendering method
 def anime_recommendations(request):
 
     list = ['Action','Adventure','Comedy','Mystery','Magic','Supernatural','Sports','School','Drama','Psychological','Kids','Romance','Fantasy']
@@ -437,6 +450,7 @@ def anime_recommendations(request):
 
     return render(request,'anime_recommendations.html',context)
 
+#anime genre based recommendations
 def anime_genre_filtering(request):
 
     list = ['Action','Adventure','Comedy','Mystery','Magic','Supernatural','Sports','School','Drama','Psychological','Kids','Romance','Fantasy']
@@ -456,6 +470,10 @@ def anime_genre_filtering(request):
         for i in range(len(genre_list)):
             test_list.append(Anime2.objects.filter(Q(genre__startswith=genre_list[i])))
 
+    #Error page check
+    if not test_list:
+        return render(request,'error_page.html')
+
     context = {
         'test_list' : test_list,
         'genre_list' : genre_list
@@ -464,6 +482,7 @@ def anime_genre_filtering(request):
 
     return render(request,'anime_genre_filtering.html',context)
 
+#anime similarity filtering method 1
 def anime_similar_filtering(request):
 
     anime1 = request.GET.get('anime1')
@@ -521,6 +540,7 @@ def anime_similar_filtering(request):
 
     return render(request,'anime_similar_filtering.html',context)
 
+#anime similarity filtering method 2
 def anime_pre_filter(request):
 
     a1 = request.GET.getlist('anime1')[0]
