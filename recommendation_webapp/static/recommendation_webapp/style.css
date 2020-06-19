@@ -140,11 +140,8 @@ a {
 /* Search result page */
 
 .row {
-  margin-left: 90px;
-  margin-right: 20px;
+  margin : 30px 20px 50px 90px;
   line-height: 0.5;
-  margin-top: 30px;
-  margin-bottom: 50px;
 }
 .card {
   width:12rem;
@@ -254,4 +251,13 @@ a {
 }
 .genre_search_book {
   margin-top: 30px;
+}
+
+
+.pre-filter-row {
+  margin : 30px 130px 50px 90px;
+  line-height: 0.5;
+}
+.pre-filter-radio {
+  margin :130px 10px 0 0;
 }

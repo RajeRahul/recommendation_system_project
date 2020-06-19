@@ -120,4 +120,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 #adding additional folder name to the static  url
-STATIC_URL = '/static/recommendation_webapp/'
+STATIC_URL = '/static/'

@@ -2,6 +2,7 @@
 
 {% block content %}
 {% load static %}
+<link rel="stylesheet" href="{% static 'recommendation_webapp/style.css' %}">
 <div class="search_result_title-3">
   <h2>Help us improve your filtering</h2><br>
 </div>
@@ -16,11 +17,11 @@
   <h3 class="similar_rating_text-1">Movie 1 : {{ movie1 }}</h3>
 </div>
 
-<div class="row">
+<div class="row pre-filter-row">
 
 
   {% for movies in mov1 %}
-  <input type="radio" name="movie1" value="{{ movies.imdbId }}" required>
+  <input type="radio" class="pre-filter-radio" name="movie1" value="{{ movies.imdbId }}" required>
   <div class="card">
     <img src="{{ movies.Poster }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="movie_poster">
     <div class="card-body">
@@ -49,11 +50,11 @@
   <h3 class="similar_rating_text-1" >Movie 2 : {{ movie2 }} </h3>
 </div>
 
-<div class="row">
+<div class="row pre-filter-row">
 
 
   {% for movies in mov2 %}
-  <input type="radio" name="movie2" value="{{ movies.imdbId }}" required>
+  <input type="radio" class="pre-filter-radio" name="movie2" value="{{ movies.imdbId }}" required>
   <div class="card">
     <img src="{{ movies.Poster }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="movie_poster">
     <div class="card-body">
@@ -82,11 +83,11 @@
   <h3 class="similar_rating_text-1" >Movie 3 : {{ movie3 }} </h3>
 </div>
 
-<div class="row">
+<div class="row pre-filter-row">
 
 
   {% for movies in mov3 %}
-  <input type="radio" name="movie3" value="{{ movies.imdbId }}" required>
+  <input type="radio" class="pre-filter-radio" name="movie3" value="{{ movies.imdbId }}" required>
   <div class="card">
     <img src="{{ movies.Poster }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="movie_poster">
     <div class="card-body">

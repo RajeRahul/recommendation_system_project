@@ -13,12 +13,12 @@
 <form name="form">
 
   <div class="similar_rating_div-1">
-    <h3 class="similar_rating_text-1" >Book : {{ book1 }}</h3>
+    <h3 class="similar_rating_text-1" >Book 1 : {{ book1 }}</h3>
   </div>
 
-  <div class="row">
+  <div class="row pre-filter-row">
   {% for books in b1 %}
-  <input type="radio" name="book1" value="{{ books.isbn }}" required>
+  <input type="radio" class="pre-filter-radio" name="book1" value="{{ books.isbn }}" required>
   <div class="card">
     <img src="{{ books.image }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="book_cover" height="220px">
     <div class="card-body">
@@ -41,12 +41,12 @@
   </div>
 
   <div class="similar_rating_div-1">
-    <h3 class="similar_rating_text-1" >Book : {{ book2 }}</h3>
+    <h3 class="similar_rating_text-1" >Book 2 : {{ book2 }}</h3>
   </div>
 
-  <div class="row">
+  <div class="row pre-filter-row">
   {% for books in b2 %}
-  <input type="radio" name="book2" value="{{ books.isbn }}" required>
+  <input type="radio" class="pre-filter-radio" name="book2" value="{{ books.isbn }}" required>
   <div class="card">
     <img src="{{ books.image }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="book_cover" height="220px">
     <div class="card-body">
@@ -69,12 +69,12 @@
   </div>
 
   <div class="similar_rating_div-1">
-    <h3 class="similar_rating_text-1" >Book : {{ book3 }}</h3>
+    <h3 class="similar_rating_text-1" >Book 3 : {{ book3 }}</h3>
   </div>
 
-  <div class="row">
+  <div class="row pre-filter-row">
   {% for books in b3 %}
-  <input type="radio" name="book3" value="{{ books.isbn }}" required>
+  <input type="radio" class="pre-filter-radio" name="book3" value="{{ books.isbn }}" required>
   <div class="card">
     <img src="{{ books.image }}" onerror="this.src='https://i.pinimg.com/originals/96/a0/0d/96a00d42b0ff8f80b7cdf2926a211e47.jpg'" class="card-img-top" alt="book_cover" height="220px">
     <div class="card-body">

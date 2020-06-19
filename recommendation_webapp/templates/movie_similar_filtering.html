@@ -11,7 +11,7 @@
 <div class="similarity_genre_div">
   <h3>your movies belong in the following genres:</h3>
   {% for i in genre_list_final %}
-  {% if forloop.counter <= 6 %}
+  {% if forloop.counter <= 8 %}
   <strong class="similarity_genre_text">{{ i }} ,</strong>
   {% endif %}
   {% endfor %}
