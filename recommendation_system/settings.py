@@ -79,6 +79,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'recommendation_system_db',
+        'PORT': 27017,
+        'HOST': 'mongo'
     }
 }
 
@@ -121,3 +123,5 @@ USE_TZ = True
 
 #adding additional folder name to the static  url
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
