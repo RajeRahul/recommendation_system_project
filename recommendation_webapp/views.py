@@ -326,11 +326,11 @@ def book_genre_filtering(request):
     author = request.GET.get('author')
 
     if request.GET.get('rating') and author != '':
-        book = Book.objects.filter(Q(category__in=category_list),Q(rating__gte=4),Q(author__icontains=author))
+        book = Book.objects.filter(Q(category__in=category_list)|Q(author__icontains=author),Q(rating__gte=4))
     elif request.GET.get('rating') and author == '':
         book = Book.objects.filter(Q(category__in=category_list),Q(rating__gte=4))
     elif request.GET.get('rating') != 'on' and author != '':
-        book = Book.objects.filter(Q(category__in=category_list),Q(author__icontains=author))
+        book = Book.objects.filter(Q(category__in=category_list)|Q(author__icontains=author))
     else :
         book = Book.objects.filter(Q(category__in=category_list))
 
