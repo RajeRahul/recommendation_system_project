@@ -92,6 +92,7 @@ a {
 .btn-warning:hover {
   background-color: #7E2C48;
   border-color: #7E2C48;
+  color: white;
 }
 
 /* Book Recommendation Engine button */
