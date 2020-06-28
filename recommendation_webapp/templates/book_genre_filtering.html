@@ -4,7 +4,12 @@
 {% load static %}
 
 <div class="search_result_title-3">
-  <h2>Books Similar to your preferences</h2><br>
+  <form name="form">
+    <button class="btn btn-primary btn-lg genre_search-btn similar_btn_1" type="submit"onclick="javascript: form.action='/book_recommendations';">Go to Recommendation Engine</button>
+    <h2>Books Similar to your preferences</h2>
+    <button class="btn btn-primary btn-lg genre_search-btn similar_btn_2" type="submit"onclick="javascript: form.action='/recommendations_webapp_home';">Go Back to Home</button>
+  </form>
+  <br>
 </div>
 <div class="similarity_genre_div">
   <h3>you selected the following categories:</h3>
