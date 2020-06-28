@@ -262,3 +262,18 @@ a {
 .pre-filter-radio {
   margin :130px 10px 0 0;
 }
+
+.similar_btn_1 {
+  position: absolute;
+  top: 25px;
+  left: 30px;
+  position: fixed;
+  z-index: 1;
+}
+.similar_btn_2 {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  position: fixed;
+  z-index: 1;
+}

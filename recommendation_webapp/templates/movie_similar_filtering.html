@@ -3,7 +3,12 @@
 {% block content %}
 {% load static %}
 <div class="search_result_title-3">
-  <h2>Movies Similar to your inputs</h2><br>
+  <form name="form">
+    <button class="btn btn-primary btn-lg genre_search-btn similar_btn_1" type="submit"onclick="javascript: form.action='/movie_recommendations';">Go to Recommendation Engine</button>
+    <h2>Movies Similar to your inputs</h2>
+    <button class="btn btn-primary btn-lg genre_search-btn similar_btn_2" type="submit"onclick="javascript: form.action='/recommendations_webapp_home';">Go Back to Home</button>
+  </form>
+  <br>
 </div>
 <div class="similar_rating_div">
   <h3 class="similar_rating_text" >movies you like have an average imdb rating of {{ avg }}</h3>
